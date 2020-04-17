@@ -1,0 +1,75 @@
+<% extend('../layout/layout.ejs') %>
+<div class="container mb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-1 pl-2 pr-2">
+          <li class="breadcrumb-item"><a href="/dashboard" style="color: black">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit Spend</li>
+        </ol>
+    </nav>
+
+    <form action="/dashboard/<%= row._id %>?_method=put" method="post">
+        <div class="form-group">
+            <div class="row mb-3">           
+                <div class="col-4">
+                    <label for="product">Product</label>
+                    <input type="text" name="product" id="product" class="form-control" value="<%= row.product %>" required>
+                </div>
+                <div class="col-4">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" class="form-control" value="<%= row.category %>" required>
+                        <option value="<%= row.category %>" selected><%= row.category %></option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for="date">Date</label>
+                    <input type="date" data-date-inline-picker="true" name="date" id="date" class="form-control" value="<%= row.date %>" required>
+                </div>    
+            </div>
+            <div class="row mb-3"  id="checkout">
+                <div class="col-4">
+                    <label for="price">Price</label>
+                    <input type="text" name="price" id="price" class="form-control" value="<%= row.price %>" required>
+                </div>
+                <div class="col-4">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" name="quantity" id="quantity" min="1" class="form-control" value="<%= row.quantity %>" equired>
+                </div>
+                <div class="col-4">
+                    <label for="subtotal">Subtotal</label>
+                    <input name="subtotal" id="subtotal" class="form-control" value="<%= row.subtotal %>">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row mb-3">
+                <div class="col-2 offset-10">
+                    <a class="btn btn-primary" href="/dashboard">Return</a>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script>
+    $(document).ready(function() {
+        $(document).on("keyup change", "#quantity", function() {
+            var price = $('#price').val();
+            var quantity = $('#quantity').val();
+            var subtotal = price * quantity;
+            $('#subtotal').val(subtotal);      
+        });
+    });
+    $(document).ready(function() {
+        $("#date").datepicker({ dateFormat: 'dd-mm-yy' });
+    });
+    $(document).ready(function() {
+        var categories = ["Food", "Medical & Healthcare", "Utilities", "Transportation", "Housing", "Insurance", "etc"];
+        var selected = $("#category option").val();
+        $.each(categories, function(index, value) {
+            if (selected !== value) {
+                $("#category").append('<option value="' + value + '">' + value + '</option>');
+            }
+        });
+    })
+</script>

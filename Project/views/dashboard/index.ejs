@@ -1,0 +1,69 @@
+<% extend('../layout/layout.ejs') %>
+</style>
+<div class="container mb-3">
+    <h2 class="mb-3">Dashboard</h2>
+    <table class="table table-sm"  style="text-align: center;">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach(function(row) { %>
+            <tr>
+                <th scope="row"><%= row.row_id %></th>
+                <td><%= row.product %></td>
+                <td><%= row.category %></td>
+                <td><%= row.price %></td>
+                <td><%= row.quantity %></td>
+                <td id="subtotal"><%= row.subtotal %></td>
+                <td><%= row.date %></td>
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-1">
+                            <a href="/dashboard/<%= row._id %>"><i class="material-icons">insert_drive_file</i></a> 
+                        </div>
+                        <div class="col-sm-1">
+                            <form action="/dashboard/<%= row._id %>?_method=delete" method="post">
+                                <a href="#" onclick="return confirm('Are you sure?')?this.parentElement.submit():null"</a><i class="material-icons">delete</i></a>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+        <!-- <tfoot>
+            <tr>
+                <td colspan="8" align="right"><strong>Total : <span id='total' name='total' style="color: red"></span></strong></td>
+            </tr>
+        </tfoot> -->
+    </table>
+    <div class="row mb-3 justify-content-end">
+        <div class="col-auto">
+            <div><strong>Total : <span id='total' name='total' style="color: red"></span></strong></div>
+        </div>
+    </div>
+    <div class="row mb-3 justify-content-end">
+        <div class="col-auto">
+            <a class="btn btn-primary" href="/dashboard/add">Add</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var total = 0;
+        $("table tbody tr #subtotal").each(function() {
+            var subtotal = parseFloat($(this).text());
+            total = total + subtotal;
+        })
+        $("#total").html("€ " + total);
+    });
+</script>
