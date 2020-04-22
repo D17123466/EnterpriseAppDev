@@ -95,3 +95,9 @@
     └── main (Header and Navigation bar)
         └── main.ejs
 ```
+
+#### Run
+
+> npm install express --save
+> npm install nodemon -g
+> nodemon
