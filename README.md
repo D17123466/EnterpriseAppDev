@@ -49,7 +49,7 @@
     - Create, Read, Update, Delete
   
   - <b>Sign in / Sign out</b>
-    - Sesstion authentication with username and password
+    - Authentication with username and password
     - Bcrypt with password hash
     
   - <b>Dashboard</b>
@@ -60,10 +60,10 @@
 #### Folders
 ```
 .
-├── config
+├── config (Session Authentication)
 │   └── passport.js
 ├── index.js
-├── models
+├── models (Mongoose Schema)
 │   ├── Account.js
 │   ├── SequenceID.js
 │   └── Table.js
@@ -72,14 +72,26 @@
 ├── package.json
 ├── public
 │   ├── css
+│   │   └── style.css
 │   └── js
-├── routes
+│       ├── javascript.js
+│       └── utils.js
+├── routes (Router)
 │   ├── account.js
 │   ├── dashboard.js
 │   └── home.js
 └── views
     ├── account
+    │   ├── profile.ejs
+    │   ├── signup.ejs
+    │   └── update.ejs
     ├── dashboard
+    │   ├── create.ejs
+    │   ├── index.ejs
+    │   └── update.ejs
     ├── home
-    └── main
+    │   ├── index.ejs
+    │   └── signin.ejs
+    └── main (Header and Navigation bar)
+        └── main.ejs
 ```
