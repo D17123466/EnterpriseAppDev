@@ -2,10 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Account = require('../models/Account');
 
-// Create
-// Read
-// Update
-// Delete 
+// CRUD
+// Sign Up
 
 // Create
 router.get('/signup', function (req, res) {
@@ -44,7 +42,6 @@ router.put('/:username', function (req, res) {
     Account.findOne({username: req.params.username}).select('password').exec(function (err, account) {
         if (err) return res.json(err);
 
-        console.log(req)
         account.password_old = account.password;
         account.password = req.body.password_new ? req.body.password_new : account.password;
 
@@ -56,9 +53,6 @@ router.put('/:username', function (req, res) {
             if (err) {
                 var account = req.body;
                 var errors = err;
-                // console.log(account);
-                // console.log(errors);
-                // return res.json(err);
                 return res.render('account/update', {account: account, errors: errors});
             }
             

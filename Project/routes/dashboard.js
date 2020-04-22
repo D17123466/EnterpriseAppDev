@@ -4,10 +4,8 @@ var Table = require('../models/Table');
 var Account = require('../models/Account');
 var moment = require('moment-timezone');
 
-// Read
-// Create
-// Update
-// Delete 
+// CRUD
+// Table / Chart
 
 // Read
 router.get('/', async function (req, res) {

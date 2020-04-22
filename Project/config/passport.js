@@ -1,3 +1,4 @@
+// Reference: http://www.passportjs.org/docs/
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Account = require('../models/Account');

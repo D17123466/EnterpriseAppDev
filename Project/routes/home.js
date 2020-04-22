@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('../config/passport');
 
+// CRUD
+// Sign In / Sign Up
 
 router.get('/', function (req, res) {
     res.render('home/index');
@@ -27,7 +29,7 @@ passport.authenticate('local', {
 
 router.get('/signout', function (req, res) {
     req.logout();
-    res.redirect('/dashboard');
+    res.redirect('/');
 });
 
 module.exports = router;

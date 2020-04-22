@@ -28,8 +28,7 @@ var account_schema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false,
-        // match: [/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/, "Please enter a minimum 8 characters of alphabet and number"]
+        select: false
     }
 }, {
     toObject: {
@@ -37,6 +36,7 @@ var account_schema = mongoose.Schema({
     }
 });
 
+// Virtual
 account_schema.virtual('password_confirm')
     .get(function () {
         return this._password_confirm;
@@ -69,6 +69,7 @@ account_schema.virtual('password_new')
         this._password_new = value;
     })
 
+// Validation of password
 account_schema.path('password').validate(function (v) {
     var account = this;
     var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
@@ -103,6 +104,7 @@ account_schema.path('password').validate(function (v) {
     }
 });
 
+// Password Hash
 account_schema.pre('save', function (next) {
     var account = this;
     if (!account.isModified('password')) {
@@ -114,6 +116,7 @@ account_schema.pre('save', function (next) {
     }
 });
 
+// Authenticate
 account_schema.methods.authenticate = function (password) {
     var account = this;
     return bcrypt.compareSync(password, account.password);

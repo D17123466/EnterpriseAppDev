@@ -7,7 +7,8 @@ var methodOverride = require('method-override');
 var passport = require('./config/passport');
 var app = express();
 
-// Mongoose Configuration
+// Mongoose Configuration 
+// Reference: https://mongoosejs.com/docs/index.html
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -30,6 +31,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(flash());
+
+// Session Authentication
 app.use(session({secret: 'D17123466', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -46,10 +49,9 @@ app.use(function (req, res, next) {
 });
 
 // Router Configuration
-app.use('/', require('./routes/home'));
-app.use('/dashboard', require('./routes/dashboard'));
-app.use('/account', require('./routes/account'));
-
+app.use('/', require('./routes/home'));                 
+app.use('/dashboard', require('./routes/dashboard'));   
+app.use('/account', require('./routes/account'));      
 
 // Port Configuration
 app.listen(8080, function (){
