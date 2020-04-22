@@ -1,5 +1,5 @@
 {
-  "name": "version_2",
+  "name": "seungkijeong",
   "version": "1.0.0",
   "description": "EAD",
   "main": "index.js",
@@ -17,6 +17,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "mongoose": "^5.9.9",
+    "nodeman": "^1.1.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
   },

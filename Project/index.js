@@ -5,7 +5,6 @@ var bodyParser = require('body-parser'); // Node.js body parsing middleware.
 var session = require('express-session'); // Session data is not saved in the cookie itself, just the session ID. Session data is stored server-side.
 var methodOverride = require('method-override');
 var passport = require('./config/passport');
-// var chartjs = require('chart.js');
 var app = express();
 
 // Mongoose Configuration
@@ -45,7 +44,6 @@ app.use(function (req, res, next) {
   }
   next();  
 });
-// app.use(chartjs);
 
 // Router Configuration
 app.use('/', require('./routes/home'));
