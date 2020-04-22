@@ -14,7 +14,7 @@
   
   - <b>Asynchronous data consumption from a REST API</b>
   
-#### This project has technologies the followings:
+#### Technologies
 
   - <b>Server Side</b>
   
