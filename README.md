@@ -96,11 +96,21 @@
         └── main.ejs
 ```
 
-#### Run
 
+#### Run
 ```
 > npm install express --save
 > npm install nodemon -g
 > nodemon
 ```
 > http://localhost:8080
+
+
+##### Note) In case of port error, just change port number in index.js file
+```
+// Port Configuration
+app.listen(3000, function (){
+  console.log('http://localhost:3000');
+});
+```
+> http://localhost:3000
