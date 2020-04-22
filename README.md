@@ -57,4 +57,28 @@
       - Create, Read, Update, Delete 
       
   
+#### Folder
 
+.
+├── config
+│   └── passport.js
+├── index.js
+├── models
+│   ├── Account.js
+│   ├── SequenceID.js
+│   └── Table.js
+├── node_modules
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   └── js
+├── routes
+│   ├── account.js
+│   ├── dashboard.js
+│   └── home.js
+└── views
+    ├── account
+    ├── dashboard
+    ├── home
+    └── main
