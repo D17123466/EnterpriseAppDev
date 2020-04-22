@@ -67,7 +67,7 @@
 │   ├── Account.js
 │   ├── SequenceID.js
 │   └── Table.js
-├── node_modules
+├── node_modules (Packages)
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -97,7 +97,7 @@
 ```
 
 
-#### Run
+#### Run (within the folder where 'index.js' file and 'node_modules' folder are located)
 ```
 > npm install express --save
 > node index.js
