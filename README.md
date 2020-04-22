@@ -53,7 +53,7 @@
     - Bcrypt with password hash
     
   - <b>Dashboard</b>
-    - <b>Table / Chart</b>
+    - Table / Chart
       - Create, Read, Update, Delete 
       
   
