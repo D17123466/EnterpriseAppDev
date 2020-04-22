@@ -1,8 +1,6 @@
 <% extend('../main/main.ejs') %>
 <div class="container mb-3">
     <h2 class="mb-3">Dashboard</h2>
-
-    <!-- <h3 class="mb-3">Table</h3> -->
     <table class="table table-sm"  style="text-align: center;">
         <thead class="thead-light">
             <tr>
@@ -65,9 +63,6 @@
             <div><strong>Total : <span id='total' name='total' style="color: red"></span></strong></div>
         </div>
     </div>
-    
-    <!-- <h3 class="mb-3">Chart</h3> -->
-
 </div>
 <div class="container mb-3">
     <div class="row justify-content-center">
@@ -88,8 +83,8 @@
     });
     
     $(document).ready(function() {
-        var food, healthcare, restaurant, util, transportation, housing, etc;
-        food = healthcare = restaurant = util = transportation = housing = etc = 0;
+        var food, healthcare, restaurant, util, transportation, housing, cosmetic, etc;
+        food = healthcare = restaurant = util = transportation = housing = cosmetic = etc = 0;
         '<% rows.forEach(function(row) { %>'
             '<% if (row.category == "Food") { %>'
                 food = food + parseFloat('<%= row.subtotal %>')
@@ -109,6 +104,9 @@
             '<% if (row.category == "Housing") { %>'
                 housing = housing + parseFloat('<%= row.subtotal %>')
             '<% } %>'
+            '<% if (row.category == "Cosmetic") { %>'
+                cosmetic = cosmetic + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
             '<% if (row.category == "etc") { %>'
                 etc = etc + parseFloat('<%= row.subtotal %>')
             '<% } %>'
@@ -125,6 +123,7 @@
 						Math.round(util/t*100, 2),
 						Math.round(transportation/t*100, 2),
                         Math.round(housing/t*100, 2),
+                        Math.round(cosmetic/t*100, 2),
                         Math.round(etc/t*100, 2),
 					],
 					backgroundColor: [
@@ -133,8 +132,9 @@
 						window.chartColors.yellow,
 						window.chartColors.green,
                         window.chartColors.blue,
-                        window.chartColors.grey,
-                        window.chartColors.purple
+                        window.chartColors.purple,
+                        window.chartColors.brown,
+                        window.chartColors.grey
 					]
                 }],
 				labels: [
@@ -144,6 +144,7 @@
 					'Utilities',
                     'Transportation',
                     'Housing',
+                    'Cosmetic',
                     'etc'
 				]
 			},
