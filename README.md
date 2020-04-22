@@ -57,7 +57,7 @@
       - Create, Read, Update, Delete 
       
   
-#### Folder
+#### Folders
 ```
 .
 ├── config
