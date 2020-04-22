@@ -1,0 +1,48 @@
+<% extend('../main/main.ejs') %>
+<div class="container mb-3 col-6">
+    <h2 class="mb-3">Sign In</h2>
+    <form action="/signin" method="post">
+        <div class="form-group">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" class="form-control" required>
+                    <div class='username_msg'></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                    <div class='password_msg'></div>
+                </div>
+            </div>
+            <div class="row mb-3 justify-content-end">
+                <div class="col-auto">
+                    <a class="btn button-option" id="path" href="">Cancel</a>
+                    <button type="submit" class="btn button-option">Done</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        var html_head = '<div class="alert" id="event"><span class="closebtn">&times;</span><span>';
+        var html_tail = '</span></div>';
+        '<% if (errors) { %>'
+            '<% if (errors.username) { %>'
+                $('.username_msg').append(html_head + '<%= errors.username %>' + html_tail);
+            '<% } %>'
+            '<% if (errors.password) { %>'
+                $('.password_msg').append(html_head + '<%= errors.password %>'+ html_tail);
+            '<% } %>'
+            $('.username_msg').on('click', '#event', function() {
+                this.style.display = 'none';
+            });        
+            $('.password_msg').on('click', '#event', function() {
+                this.style.display = 'none';
+            });    
+        '<% } %>'
+    })
+</script>

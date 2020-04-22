@@ -1,0 +1,93 @@
+<% extend('../main/main.ejs') %>
+<div class="container mb-3 col-6">
+    <h2 class="mb-3">Sign Up</h2>
+    <form action="/account" method="post">
+        <div class="form-group">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" value="<%= account.username %>" class="form-control" required>
+                    <div id="username_msg"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="firstname">First name</label>
+                    <input type="text" name="firstname" id="firstname" value="<%= account.firstname %>" class="form-control" required>
+                </div>
+                <div class="col-6">
+                    <label for="lastname">Last name</label>
+                    <input type="text" name="lastname" id="lastname" value="<%= account.lastname %>" class="form-control" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" value="<%= account.email %>" class="form-control" required>
+                    <div id="email_msg"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                    <div id="password_msg"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password_confirm">Confirm password</label>
+                    <input type="password" name="password_confirm" id="password_confirm" class="form-control" required>
+                    <div id="password_confirm_msg"></div>
+                </div>
+            </div>
+            <div class="row mb-3 justify-content-end">
+                <div class="col-auto">
+                    <a class="btn button-option" id="path" href="">Cancel</a>
+                    <button type="submit" class="btn button-option">Done</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var html_head = '<div class="alert" id="event"><span class="closebtn">&times;</span><span>';
+    var html_tail = '</span></div>';
+    $(document).ready(function() {
+    '<% if (errors.name == "MongoError" && errors.code == "11000") { %>' 
+        '<% if (errors.errmsg.indexOf("email") > 0) { %>'
+            $('#email_msg').append(html_head + "Please use another email address" + html_tail)
+        '<% } %>'
+        '<% if (errors.errmsg.indexOf("username") > 0) { %>'
+            $('#username_msg').append(html_head + "Please use another username" + html_tail)
+        '<% } %>'
+    '<% } %>'
+    '<% if (errors.name == "ValidationError") { %>'
+        '<% if (errors.errors.email) { %>'
+            $('#email_msg').append(html_head + '<%= errors.errors.email.message %>' + html_tail);
+        '<% } %>'
+        '<% if (errors.errors.password) { %>'
+            $('#password_msg').append(html_head + '<%= errors.errors.password.message %>' + html_tail);
+        '<% } %>'
+        '<% if (errors.errors.password_confirm) { %>'
+            $('#password_confirm_msg').append(html_head + "<%= errors.errors.password_confirm.message %>" + html_tail);     
+        '<% } %>'
+    '<% } %>'
+
+    });
+
+    $('#email_msg').on('click', '#event', function() {
+        this.style.display = 'none';
+    });
+    $('#password_msg').on('click', '#event', function() {
+        this.style.display = 'none';
+    });
+    $('#password_confirm_msg').on('click', '#event', function() {
+        this.style.display = 'none';
+    });
+    $('#username_msg').on('click', '#event', function() {
+        this.style.display = 'none';
+    });
+
+</script>
+

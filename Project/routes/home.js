@@ -1,19 +1,33 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('../config/passport');
 
-// Home page
-router.get('/', function(req, res) {
+
+router.get('/', function (req, res) {
     res.render('home/index');
 });
 
-// // Record page
-// router.get('/record', function(req, res) {
-//     res.render('home/record');
-// })
+router.get('/signin', function (req, res) {
+    var errors = req.flash('errors')[0] || {};
+    res.render('home/signin', {errors: errors});
+});
 
-// // Board page
-// router.get('/board', function(req, res) {
-//     res.render('home/board');
-// });
+router.post('/signin', function (req, res, next) {
+    if (!req.body.username && !req.body.password) {
+        res.redirect('/signin');
+    }
+    next();
+}, 
+passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/signin',
+        // failureFlash: true
+    })
+);
+
+router.get('/signout', function (req, res) {
+    req.logout();
+    res.redirect('/dashboard');
+});
 
 module.exports = router;

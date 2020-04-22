@@ -1,0 +1,26 @@
+h2, h3, i {
+    color: #008CBA;
+}
+.button-option {
+    background-color: white; 
+    color: black;
+    border: 2px solid #008CBA;
+}
+.button-option:hover {
+    background-color: #008CBA;
+    color: white;
+}
+.alert {
+  background-color: #008CBA;
+  color: white;
+  font-size: 12px;
+}
+.closebtn {
+  color: white;
+  float: right;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.closebtn:hover {
+  color: black;
+}

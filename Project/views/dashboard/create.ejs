@@ -1,9 +1,9 @@
-<% extend('../layout/layout.ejs') %>
+<% extend('../main/main.ejs') %>
 <div class="container mb-3">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb p-1 pl-2 pr-2">
-          <li class="breadcrumb-item"><a href="/dashboard" style="color: black">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Add Spend</li>
+          <li class="breadcrumb-item"><a href="/dashboard" style="color: #008CBA">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Add content</li>
         </ol>
     </nav>
     <form action="/dashboard" method="post">
@@ -27,7 +27,7 @@
             <div class="row mb-3"  id="checkout">
                 <div class="col-4">
                     <label for="price">Price</label>
-                    <input type="text" name="price" id="price" class="form-control" required>
+                    <input type="number" name="price" id="price" step="any" class="form-control" required>
                 </div>
                 <div class="col-4">
                     <label for="quantity">Quantity</label>
@@ -35,13 +35,13 @@
                 </div>
                 <div class="col-4">
                     <label for="subtotal">Subtotal</label>
-                    <input name="subtotal" id="subtotal" class="form-control">
+                    <input type="number" name="subtotal" id="subtotal" step="any" class="form-control">
                 </div>
             </div>
             <div class="row mb-3 justify-content-end">
                 <div class="col-auto">
-                    <a class="btn btn-primary" href="/dashboard">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Done</button>
+                    <a class="btn button-option" href="/dashboard">Cancel</a>
+                    <button type="submit" class="btn button-option">Done</button>
                 </div>
             </div>
         </div>
@@ -49,6 +49,12 @@
 </div>
 <script>
     $(document).ready(function() {
+        $(document).on("keyup change", "#price", function() {
+            var price = $('#price').val();
+            var quantity = $('#quantity').val();
+            var subtotal = price * quantity;
+            $('#subtotal').val(subtotal);      
+        });
         $(document).on("keyup change", "#quantity", function() {
             var price = $('#price').val();
             var quantity = $('#quantity').val();
@@ -60,7 +66,7 @@
         $("#date").datepicker({ dateFormat: 'dd-mm-yy' });
     }); 
     $(document).ready(function() {
-        var categories = ["Food", "Medical & Healthcare", "Utilities", "Transportation", "Housing", "Insurance", "etc"];
+        var categories = ["Food", "Medical & Healthcare", "Restaurant", "Utilities", "Transportation", "Housing", "etc"];
         // var selected = $("#category option").val();
         $.each(categories, function(index, value) {
             $("#category").append('<option value="' + value + '">' + value + '</option>');

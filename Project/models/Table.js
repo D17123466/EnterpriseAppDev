@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
 var SequenceID = require('./SequenceID')
 
-
-var tableSchema = mongoose.Schema({
+var table_schema = mongoose.Schema({
     row_id: {
         type: Number
     },
@@ -27,11 +26,16 @@ var tableSchema = mongoose.Schema({
     },
     date: {
         type: String
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'account', 
+        required: true
     }
 });
 
 // Auto Increment ID
-tableSchema.pre('save', async function(next) {
+table_schema.pre('save', async function(next) {
     var document = this;
     if(document.isNew) {
         seq_id = await SequenceID.findOne({seq_type: 'row_id'}).exec();
@@ -45,5 +49,5 @@ tableSchema.pre('save', async function(next) {
     return next();
 });
 
-var Table = mongoose.model('row', tableSchema);
+var Table = mongoose.model('row', table_schema);
 module.exports = Table;

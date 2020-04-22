@@ -1,0 +1,122 @@
+<% extend('../main/main.ejs') %>
+<div class="container mb-3">
+    <!-- <h2 class="mb-3">Account Setting</h2> -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-1 pl-2 pr-2">
+          <li class="breadcrumb-item"><a href="/account/<%= account.username %>/" style="color: #008CBA">Profile</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Update profile</li>
+        </ol>
+    </nav>
+</div>
+<div class="container mb-3 col-6">
+    <form action="/account/<%= account.username %>?_method=put" method="post">
+        <div class="form-group">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password_current">Current password</label>
+                    <input type="password" name="password_current" id="password_current" class="form-control" required>
+                    <div class="password_current_msg"></div>
+                </div>
+            </div>
+            <!-- <fieldset disabled> -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" class="form-control" value='<%= account.username %>' required disabled>
+                    <div id="username_msg"></div>
+                </div>
+            </div>
+            <!-- </fieldset> -->
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="firstname">First name</label>
+                    <input type="text" name="firstname" id="firstname" class="form-control" value='<%= account.firstname %>' required>
+                </div>
+                <div class="col-6">
+                    <label for="lastname">Last name</label>
+                    <input type="text" name="lastname" id="lastname" class="form-control" value='<%= account.lastname %>' required>
+                </div>
+            </div>
+            <!-- <fieldset disabled> -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" value='<%= account.email %>' required disabled>
+                    <div id="email_msg"></div>
+                </div>
+            </div>
+            <!-- </fieldset> -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password_new">New password</label>
+                    <input type="password" name="password_new" id="password_new" class="form-control" required>
+                    <div class="password_new_msg"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password_confirm">Confirm password</label>
+                    <input type="password" name="password_confirm" id="password_confirm" class="form-control" required>
+                    <div class="password_confirm_msg"></div>
+                </div>
+            </div>
+            <div class="row mb-3 justify-content-end">
+                <div class="col-auto">
+                    <a class="btn button-option" href="/account/<%= account.username %>">Cancel</a>
+                    <button id="profile_update" type="submit" class="btn button-option">Done</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#profile_update').on('click', function() {
+            $('#username').prop('disabled', false);
+            $('#email').prop('disabled', false);
+        })
+    });
+
+    $(document).ready(function() {
+        var html_head = '<div class="alert" id="event"><span class="closebtn">&times;</span><span>';
+        var html_tail = '</span></div>';
+        '<% if (errors.name == "MongoError" && errors.code == "11000") { %>' 
+            '<% if (errors.errmsg.indexOf("email") > 0) { %>'
+                $('#email_msg').append(html_head + "Please use another email address" + html_tail)
+            '<% } %>'
+            '<% if (errors.errmsg.indexOf("username") > 0) { %>'
+                $('#username_msg').append(html_head + "Please use another username" + html_tail)
+            '<% } %>'
+        '<% } %>'
+        '<% if (errors.name == "ValidationError") { %>'
+            '<% if (errors.errors.password_current) { %>'
+                $('.password_current_msg').append(html_head + '<%= errors.errors.password_current.message %>' + html_tail);
+            '<% } %>'
+            '<% if (errors.errors.password_new) { %>'
+                $('.password_new_msg').append(html_head + '<%= errors.errors.password_new.message %>' + html_tail);
+            '<% } %>'
+            '<% if (errors.errors.password_confirm) { %>'
+                $('.password_confirm_msg').append(html_head + '<%= errors.errors.password_confirm.message %>' + html_tail);
+            '<% } %>'
+        '<% } %>'
+
+        $('.password_current_msg').on('click', '#event', function() {
+            this.style.display = 'none';
+        });
+        $('#email_msg').on('click', '#event', function() {
+            this.style.display = 'none';
+        });
+        $('.password_new_msg').on('click', '#event', function() {
+            this.style.display = 'none';
+        });
+        $('.password_confirm_msg').on('click', '#event', function() {
+            this.style.display = 'none';
+        });
+        $('#username_msg').on('click', '#event', function() {
+            this.style.display = 'none';
+        });
+    });
+    
+
+
+</script>

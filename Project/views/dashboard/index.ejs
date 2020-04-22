@@ -1,7 +1,8 @@
-<% extend('../layout/layout.ejs') %>
-</style>
+<% extend('../main/main.ejs') %>
 <div class="container mb-3">
     <h2 class="mb-3">Dashboard</h2>
+
+    <!-- <h3 class="mb-3">Table</h3> -->
     <table class="table table-sm"  style="text-align: center;">
         <thead class="thead-light">
             <tr>
@@ -13,6 +14,7 @@
                 <th>Subtotal</th>
                 <th>Date</th>
                 <th>Action</th>
+                <th>Writer</th>
             </tr>
         </thead>
         <tbody>
@@ -27,18 +29,30 @@
                 <td><%= row.date %></td>
                 <td>
                     <div class="row justify-content-center">
+                        <% if(isAuthenticated && account_current.id == row.user.id) { %>
                         <div class="col-sm-1">
                             <a href="/dashboard/<%= row._id %>"><i class="material-icons">insert_drive_file</i></a> 
                         </div>
                         <div class="col-sm-1">
                             <form action="/dashboard/<%= row._id %>?_method=delete" method="post">
-                                <a href="#" onclick="return confirm('Are you sure?')?this.parentElement.submit():null"</a><i class="material-icons">delete</i></a>
+                                <a href="#" onclick="return confirm('Are you sure?')?this.parentElement.submit():null"</a><i class="material-icons">delete_forever</i></a>
                             </form>
                         </div>
+                        <% } else { %>
+                        <div class="col-sm-1">
+                            <a href="/dashboard/<%= row._id %>"><i class="material-icons">insert_drive_file</i></a> 
+                        </div>
+                        <% } %>
                     </div>
                 </td>
+                <td class="user"><%= row.user ? row.user.username : "" %></td>
             </tr>
             <% }) %>
+            <% if(isAuthenticated) { %>
+            <tr>
+                <td colspan=9>Add a new content  <a href="/dashboard/create"><i class="material-icons">note_add</i></a></td>
+            </tr>
+            <% } %>
         </tbody>
         <!-- <tfoot>
             <tr>
@@ -51,9 +65,14 @@
             <div><strong>Total : <span id='total' name='total' style="color: red"></span></strong></div>
         </div>
     </div>
-    <div class="row mb-3 justify-content-end">
-        <div class="col-auto">
-            <a class="btn btn-primary" href="/dashboard/add">Add</a>
+    
+    <!-- <h3 class="mb-3">Chart</h3> -->
+
+</div>
+<div class="container mb-3">
+    <div class="row justify-content-center">
+        <div id="canvas-holder" style="width:70%">
+            <canvas id="chart-area"></canvas>
         </div>
     </div>
 </div>
@@ -63,7 +82,88 @@
         $("table tbody tr #subtotal").each(function() {
             var subtotal = parseFloat($(this).text());
             total = total + subtotal;
+            t = total;
         })
-        $("#total").html("€ " + total);
+        $("#total").html("€ " + total.toFixed(2));
+    });
+    
+    $(document).ready(function() {
+        var food, healthcare, restaurant, util, transportation, housing, etc;
+        food = healthcare = restaurant = util = transportation = housing = etc = 0;
+        '<% rows.forEach(function(row) { %>'
+            '<% if (row.category == "Food") { %>'
+                food = food + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+            '<% if (row.category == "Medical & Healthcare") { %>'
+                healthcare = healthcare + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+            '<% if (row.category == "Restaurant") { %>'
+                restaurant = restaurant + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+            '<% if (row.category == "Utilities") { %>'
+                util = util + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+            '<% if (row.category == "Transportation") { %>'
+                transportation = transportation + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+            '<% if (row.category == "Housing") { %>'
+                housing = housing + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+            '<% if (row.category == "etc") { %>'
+                etc = etc + parseFloat('<%= row.subtotal %>')
+            '<% } %>'
+        '<% }) %>'
+
+		var config = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [
+                        Math.round(food/t*100, 2),
+                        Math.round(healthcare/t*100, 2),
+                        Math.round(restaurant/t*100, 2),
+						Math.round(util/t*100, 2),
+						Math.round(transportation/t*100, 2),
+                        Math.round(housing/t*100, 2),
+                        Math.round(etc/t*100, 2),
+					],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+                        window.chartColors.blue,
+                        window.chartColors.grey,
+                        window.chartColors.purple
+					]
+                }],
+				labels: [
+					'Food',
+					'Medical & Healthcare',
+					'Restaurant',
+					'Utilities',
+                    'Transportation',
+                    'Housing',
+                    'etc'
+				]
+			},
+			options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'By Category',
+                    position: 'top'
+                },
+                legend: {
+                    display: true,
+                    position: 'left'
+                }
+			}
+        };
+
+		window.onload = function() {
+			var ctx = document.getElementById('chart-area').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+		};
     });
 </script>
