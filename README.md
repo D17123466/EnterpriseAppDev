@@ -100,9 +100,15 @@
 #### Run
 ```
 > npm install express --save
+> node index.js
+```
+or
+```
+> npm install express --save
 > npm install nodemon -g
 > nodemon
 ```
+
 > http://localhost:8080
 
 
