@@ -120,3 +120,7 @@ app.listen(3000, function (){
 });
 ```
 > http://localhost:3000
+
+#### AWS
+
+> ec2-54-154-21-68.eu-west-1.compute.amazonaws.com
