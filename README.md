@@ -97,7 +97,9 @@
 ```
 
 
-#### Run (within the folder where 'index.js' file and 'node_modules' folder are located)
+#### Development 
+
+##### Run (within the folder where 'index.js' file and 'node_modules' folder are located)
 ```
 > npm install express --save
 > node index.js
@@ -112,7 +114,7 @@ or
 > http://localhost:8080
 
 
-##### Note) In case of port error, just change port number in index.js file
+###### Note) In case of port number error, just change port number in index.js file
 ```
 // Port Configuration
 app.listen(3000, function (){
@@ -121,7 +123,10 @@ app.listen(3000, function (){
 ```
 > http://localhost:3000
 
+
 #### AWS
+
+##### Run
 
 > [AWS](http://ec2-54-154-21-68.eu-west-1.compute.amazonaws.com)
 
