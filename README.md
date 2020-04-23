@@ -24,7 +24,7 @@
     
       - EJS (Embedded JavaScript)
       
-      - Bcrypt.js (Password hasing)
+      - Bcrypt.js (Password hashing)
       
       - Passport.js (Authentication)
       
