@@ -1,4 +1,4 @@
-# EnterpriseAppDev
+# EnterpriseAppDev: Spend Management Application
 
 ## EnterpriseApplicationDevelopment:
 
